@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Todo {
   text: string;
@@ -7,6 +7,7 @@ interface Todo {
 
 const TodoList = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const newTodoRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const storedTodos = localStorage.getItem("todos");
@@ -44,8 +45,9 @@ const TodoList = () => {
           id="new-todo"
           placeholder="Add a new todo..."
           className="todo-list-input"
+          ref={newTodoRef}
         />
-        <button id="add-todo" onClick={() => addTodo(document.getElementById("new-todo")!.value)}>
+        <button id="add-todo" onClick={() => addTodo(newTodoRef.current!.value)}>
           Add
         </button>
       </div>
