@@ -35,27 +35,6 @@ const TodoList = () => {
     setTodos(todos.filter((_, i) => i !== index));
   };
 
-  const handleDragStart = (event: React.DragEvent<HTMLLIElement>, index: number) => {
-    event.dataTransfer.setData("text/plain", index.toString());
-  };
-
-  const handleDragOver = (event: React.DragEvent<HTMLLIElement>) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event: React.DragEvent<HTMLLIElement>) => {
-    event.preventDefault();
-    const draggedIndex = parseInt(event.dataTransfer.getData("text/plain"));
-    const targetIndex = parseInt(event.target.dataset.index || "0");
-
-    setTodos((prevTodos) => {
-      const newTodos = [...prevTodos];
-      const [draggedTodo] = newTodos.splice(draggedIndex, 1);
-      newTodos.splice(targetIndex, 0, draggedTodo);
-      return newTodos;
-    });
-  };
-
   return (
     <div className="todo-list-container">
       <h1>Todo List</h1>
@@ -75,11 +54,6 @@ const TodoList = () => {
           <li
             key={index}
             className={`todo-list-item ${todo.done ? "done" : ""}`}
-            draggable
-            onDragStart={(event) => handleDragStart(event, index)}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            data-index={index.toString()}
           >
             {todo.text}
             <button onClick={() => toggleDone(index)}>Done</button>
