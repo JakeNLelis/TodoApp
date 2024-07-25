@@ -20,6 +20,10 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Todo App
+
+This is a simple todo application built with Next.js and Tailwind CSS. It allows users to add, mark as done, and delete todo items. The todo list is persisted in local storage so that it is saved even after the browser is closed.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
