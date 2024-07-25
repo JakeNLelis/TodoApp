@@ -41,6 +41,10 @@ const TodoList = () => {
     <div className="todo-list-container">
       <h1 className="text-2xl font-bold mb-4">Todo List</h1>
       <div className="todo-list-header flex items-center mb-4">
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          addTodo(newTodoRef.current!.value);
+        }}>
         <input
           type="text"
           id="new-todo"
@@ -49,12 +53,14 @@ const TodoList = () => {
           ref={newTodoRef}
         />
         <button
+          type="submit"
           id="add-todo"
-          onClick={() => addTodo(newTodoRef.current!.value)}
+          
           className="todo-list-add-button px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 ml-2"
         >
           Add
         </button>
+        </form>
       </div>
       <ul id="todo-list" className="todo-list">
         {todos.map((todo, index) => (
@@ -67,7 +73,7 @@ const TodoList = () => {
             <span
               className={`todo-list-item-text ${
                 todo.done ? "line-through text-gray-500" : ""
-              }`}
+              } text-black`}
             >
               {todo.text}
             </span>
