@@ -39,16 +39,20 @@ const TodoList = () => {
 
   return (
     <div className="todo-list-container">
-      <h1>Todo List</h1>
-      <div className="todo-list-header">
+      <h1 className="text-2xl font-bold mb-4">Todo List</h1>
+      <div className="todo-list-header flex items-center mb-4">
         <input
           type="text"
           id="new-todo"
           placeholder="Add a new todo..."
-          className="todo-list-input"
+          className="todo-list-input px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex-grow"
           ref={newTodoRef}
         />
-        <button id="add-todo" onClick={() => addTodo(newTodoRef.current!.value)}>
+        <button
+          id="add-todo"
+          onClick={() => addTodo(newTodoRef.current!.value)}
+          className="todo-list-add-button px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 ml-2"
+        >
           Add
         </button>
       </div>
@@ -56,11 +60,31 @@ const TodoList = () => {
         {todos.map((todo, index) => (
           <li
             key={index}
-            className={`todo-list-item ${todo.done ? "done" : ""}`}
+            className={`todo-list-item flex items-center justify-between px-4 py-2 rounded-md border border-gray-300 mb-2 ${
+              todo.done ? "bg-gray-200" : "bg-white"
+            }`}
           >
-            {todo.text}
-            <button onClick={() => toggleDone(index)}>Done</button>
-            <button onClick={() => deleteTodo(index)}>Delete</button>
+            <span
+              className={`todo-list-item-text ${
+                todo.done ? "line-through text-gray-500" : ""
+              }`}
+            >
+              {todo.text}
+            </span>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => toggleDone(index)}
+                className="todo-list-item-button px-2 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Done
+              </button>
+              <button
+                onClick={() => deleteTodo(index)}
+                className="todo-list-item-button px-2 py-1 rounded-md bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
