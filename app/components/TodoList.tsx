@@ -45,7 +45,7 @@ const TodoList = () => {
           type="text"
           id="new-todo"
           placeholder="Add a new todo..."
-          className="todo-list-input px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex-grow"
+          className="todo-list-input px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex-grow text-black"
           ref={newTodoRef}
         />
         <button
