@@ -1,4 +1,4 @@
-# MERN Stack Template
+# MERN Stack Todo Application
 
 <img src='https://raw.githubusercontent.com/BenElferink/mern-template/refs/heads/images/images/mern.jpeg' />
 
