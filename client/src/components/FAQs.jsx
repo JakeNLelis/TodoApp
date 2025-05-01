@@ -1,8 +1,8 @@
-"use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import PlusIcon from "../assets/icons/plus.svg?react";
 import MinusIcon from "../assets/icons/minus.svg?react";
-import clsx from "clsx";
+// eslint-disable-next-line no-unused-vars
+import { AnimatePresence, motion, useInView } from "framer-motion";
 
 const items = [
   {
@@ -38,26 +38,38 @@ const AccordionItem = ({ question, answer }) => {
         <span className="flex-1 text-lg font-bold">{question}</span>
         {isOpen ? <MinusIcon /> : <PlusIcon />}
       </div>
-      <div
-        className={clsx("mt-4", {
-          hidden: !isOpen,
-          "": isOpen === true,
-        })}
-      >
-        {answer}
-      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+            animate={{ opacity: 1, height: "auto", marginTop: "16px" }}
+            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+          >
+            {answer}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export const FAQs = () => {
+  const accordionRef = useRef(null);
+  const isInView = useInView(accordionRef);
   return (
     <div className="text-white py-[72px] sm:py-24 bg-gradient-to-b to-black from-[#5D2CAB]">
       <div className="items-center p-4">
         <h2 className="text-center font-bold text-5xl sm:text-6xl max-w-[648px] mx-auto tracking-tighter">
           Frequently asked questions
         </h2>
-        <div className="mt-12 max-w-[648px] mx-auto">
+        <div
+          className="mt-12 max-w-[648px] mx-auto"
+          style={{
+            opacity: isInView ? 1 : 0,
+            transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
+          }}
+          ref={accordionRef}
+        >
           {items.map(({ question, answer }, index) => (
             <AccordionItem key={index} question={question} answer={answer} />
           ))}

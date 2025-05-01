@@ -7,7 +7,7 @@ export const Banner = () => {
             Introducing a completely redesigned interface -{" "}
           </span>
           <a href="#" className="underline underline-offset-4">
-            Explore the demo
+            Get started with Tasky
           </a>
         </p>
       </div>

@@ -44,9 +44,7 @@ export const Navbar = () => {
             >
               Customers
             </a>
-            <button className="bg-white py-2 px-4 rounded-lg">
-              Get for free
-            </button>
+            <button className="bg-white py-2 px-4 rounded-lg">Login</button>
           </nav>
         </div>
       </div>
