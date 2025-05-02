@@ -6,8 +6,8 @@ import {
   updateProfile,
   getCurrentUser,
   updatePassword,
-} from "../controllers/auth.js";
-import authMiddleware from "../middlewares/auth.js";
+} from "../controllers/authController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const userRouter = express.Router();
 
