@@ -10,7 +10,7 @@ import { Footer } from "../components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Banner />
       <Navbar />
       <Hero />
@@ -20,6 +20,6 @@ export default function Home() {
       <FAQs />
       <CallToAction />
       <Footer />
-    </>
+    </div>
   );
 }

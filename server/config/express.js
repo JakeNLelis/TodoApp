@@ -12,7 +12,7 @@ const configureExpress = (app) => {
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(express.urlencoded({ extended: true }));
-  app.use(cors());
+  app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 
   app.use("/api/user", userRouter);
   app.use("/api/todo", todoRouter);

@@ -4,8 +4,10 @@ import messageImage from "../assets/images/message.png";
 import { useRef } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -76,6 +78,7 @@ export const Hero = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 1 }}
             className="bg-white text-black cursor-pointer py-3 px-5 rounded-lg"
+            onClick={() => navigate("/dashboard")}
           >
             Get started
           </motion.button>

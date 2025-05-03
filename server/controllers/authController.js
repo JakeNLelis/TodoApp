@@ -25,6 +25,11 @@ export async function register(req, res, next) {
       minSymbols: 1,
     })
   ) {
+    res.json({
+      success: false,
+      message:
+        "Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one symbol.",
+    });
     return next(createError(400, "Weak Password"));
   }
   try {
@@ -42,6 +47,7 @@ export async function register(req, res, next) {
     });
   } catch (error) {
     console.log(error);
+    res.json({ success: false, message: "User not created" });
     return next(createError(500, "Server Error"));
   }
 }
@@ -49,14 +55,17 @@ export async function register(req, res, next) {
 export async function login(req, res, next) {
   const { email, password } = req.body;
   if (!email || !password) {
+    res.json({ success: false, message: "Missing Fields" });
     return next(createError(400, "Missing Fields"));
   }
   try {
     const user = await User.findOne({ email: email });
     if (!user) return next(createError(401, "Wrong email or password!"));
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
-    if (!isPasswordCorrect)
+    if (!isPasswordCorrect) {
+      res.json({ success: false, message: "Wrong email or password!" });
       return next(createError(400, "Wrong email or password!"));
+    }
     const token = createToken(user._id);
     res
       .cookie("access_token", token, {
@@ -72,6 +81,7 @@ export async function login(req, res, next) {
       });
   } catch (error) {
     console.log(error);
+    res.json({ success: false, message: "Server Error" });
     return next(createError(500, "Server Error"));
   }
 }
@@ -87,6 +97,7 @@ export async function getCurrentUser(req, res, next) {
     });
   } catch (error) {
     console.log(error);
+    res.json({ success: false, message: error.message });
     return next(createError(500, "Server Error"));
   }
 }
@@ -104,6 +115,7 @@ export async function logout(req, res, next) {
 export async function updateProfile(req, res, next) {
   const { name, email } = req.body;
   if (!name || !email || !validator.isEmail(email)) {
+    res.json({ success: false, message: "Valid name and email required" });
     return next(createError(400, "Valid name and email required"));
   }
   try {
@@ -117,6 +129,7 @@ export async function updateProfile(req, res, next) {
     res.json({ success: true, message: "Profile updated successfully", user });
   } catch (error) {
     console.log(error);
+    res.json({ success: false, message: error.message });
     return next(createError(500, "Server Error"));
   }
 }
@@ -133,6 +146,11 @@ export async function updatePassword(req, res, next) {
       minSymbols: 1,
     })
   ) {
+    res.json({
+      success: false,
+      message:
+        "Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one symbol.",
+    });
     return next(createError(400, "Password Invalid"));
   }
 
@@ -149,6 +167,28 @@ export async function updatePassword(req, res, next) {
     res.json({ success: true, message: "Password changed!" });
   } catch (error) {
     console.log(error);
+    res.json({ success: false, message: error.message });
     return next(createError(500, "Server Error"));
+  }
+}
+
+export async function deleteAccount(req, res, next) {
+  try {
+    const user = await User.findByIdAndDelete(req.user.id);
+    if (!user) return next(createError(404, "User not found!"));
+    res.json({ success: true, message: "Account deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+    return next(createError(500, "Server Error"));
+  }
+}
+
+export async function isAuthenticated(req, res, next) {
+  try {
+    res.json({ success: true, message: "Authenticated" });
+  } catch (error) {
+    res.json({ success: false, message: "Token invalid or expired" });
+    return next(createError(401, "Token invalid or expired"));
   }
 }

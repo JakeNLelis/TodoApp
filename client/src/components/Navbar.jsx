@@ -1,7 +1,9 @@
 import logoImage from "../assets/images/logosaas.png?react";
 import MenuIcon from "../assets/icons/menu.svg?react";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-black">
       <div className="px-4">
@@ -44,7 +46,12 @@ export const Navbar = () => {
             >
               Customers
             </a>
-            <button className="bg-white py-2 px-4 rounded-lg">Login</button>
+            <button
+              className="bg-white py-2 px-4 rounded-lg cursor-pointer"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
           </nav>
         </div>
       </div>
